@@ -1,0 +1,5 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/sourcecode/source_code/2_multiply/multiply.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module multiply
+WARNING: [VRFC 10-3380] identifier 'multiplier' is used before its declaration [D:/sourcecode/source_code/2_multiply/multiply.v:17]
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/sourcecode/source_code/2_multiply/tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb

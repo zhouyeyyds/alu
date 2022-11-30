@@ -1,0 +1,12 @@
+0.6
+2019.2
+Nov  6 2019
+21:57:16
+D:/sourcecode/source_code/4_alu/alu.v,1669781505,verilog,,D:/sourcecode/source_code/4_alu/tb.v,,alu,,,,,,,,
+D:/sourcecode/source_code/4_alu/tb.v,1669781665,verilog,,,,tb,,,,,,,,
+D:/vivadoproject/adder32/adder32.srcs/sources_1/new/CLA.v,1668758818,verilog,,D:/vivadoproject/adder32/adder32.srcs/sources_1/new/CLA_16.v,,CLA,,,,,,,,
+D:/vivadoproject/adder32/adder32.srcs/sources_1/new/CLA_16.v,1669794818,verilog,,D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder.v,,CLA_16,,,,,,,,
+D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder.v,1669780923,verilog,,D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder32.v,,adder,,,,,,,,
+D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder32.v,1669794818,verilog,,D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder_4.v,,adder32,,,,,,,,
+D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder_4.v,1668758818,verilog,,D:/sourcecode/source_code/4_alu/alu.v,,adder_4,,,,,,,,
+D:/vivadoproject/alu/alu.sim/sim_1/behav/xsim/glbl.v,1573089660,verilog,,,,glbl,,,,,,,,

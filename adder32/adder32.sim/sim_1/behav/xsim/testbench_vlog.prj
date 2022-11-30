@@ -1,0 +1,14 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../adder32.srcs/sources_1/new/CLA.v" \
+"../../../../adder32.srcs/sources_1/new/CLA_16.v" \
+"../../../../adder32.srcs/sources_1/new/adder.v" \
+"../../../../adder32.srcs/sources_1/new/adder32.v" \
+"../../../../adder32.srcs/sources_1/new/adder_4.v" \
+"../../../../../../sourcecode/source_code/1_adder/testbench.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

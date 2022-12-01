@@ -1,6 +1,6 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  \
-"../../../../../../sourcecode/source_code/2_multiply/multiply.v" \
+"../../../../multiply.srcs/sources_1/new/multiply.v" \
 "../../../../../../sourcecode/source_code/2_multiply/tb.v" \
 
 # compile glbl module

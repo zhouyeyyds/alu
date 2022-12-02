@@ -26,7 +26,7 @@ module alu_display(
     );
 //-----{调用ALU模块}begin
     reg   [13:0] alu_control;  // ALU控制信号
-//   独热码
+    //14位独热码
     reg   [31:0] alu_src1;     // ALU操作数1
     reg   [31:0] alu_src2;     // ALU操作数2
     wire  [31:0] alu_result;   // ALU结果
@@ -42,38 +42,6 @@ module alu_display(
     
 //-----{调用ALU模块}end
 
-//-----{调用乘法器模块}begin
-    wire [63:0] product; 
-    wire        mult_end;  
-
-    multiply multiply_module (
-    //实例化乘法模块
-        .clk       (clk       ),
-        .mult_begin(alu_mul   ),
-        .mult_op1  (alu_src1  ), 
-        .mult_op2  (alu_src1  ),
-        .product   (product   ),
-        .mult_end  (mult_end  )
-    );
-    reg [31:0] mul_highresult;//乘法高位结果
-    reg [31:0] mul_lowresult;//乘法低位结果
-    always @(posedge clk)
-    begin
-        if (~alu_control[2])
-        //不执行乘法操作时
-        begin
-        //赋0值
-            mul_highresult <= 32'd0;
-            mul_lowresult  <= 32'd0;
-        end
-        else if (mult_end&&alu_control[2])
-        //执行乘法操作时
-        begin
-            mul_highresult <= product[63:32];
-            mul_lowresult  <= product[31:0];
-        end
-    end
-//-----{调用乘法器模块}end
 
 //---------------------{调用触摸屏模块}begin--------------------//
 //-----{实例化触摸屏}begin
@@ -212,20 +180,6 @@ module alu_display(
                 display_valid <= 1'b1;
                 display_name  <= "ODD";
                 display_value <= div_odd;
-            end
-            6'd6 :
-            //显示乘法高位
-            begin
-                display_valid <= 1'b1;
-                display_name  <= "HIGH";
-                display_value <= alu_mul?mul_highresult:0 ;
-            end
-            6'd7 :
-            //显示乘法低位
-            begin
-                display_valid <= 1'b1;
-                display_name  <= "LOW";
-                display_value <= alu_mul?mul_lowresult:0;
             end
             default :
             begin

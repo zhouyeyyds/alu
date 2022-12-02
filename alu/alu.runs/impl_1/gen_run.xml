@@ -25,10 +25,12 @@
   <File Type="ROUTE-DRC" Name="alu_display_drc_routed.rpt"/>
   <File Type="ROUTE-DRC-PB" Name="alu_display_drc_routed.pb"/>
   <File Type="ROUTE-DRC-RPX" Name="alu_display_drc_routed.rpx"/>
+  <File Type="BITSTR-LTX" Name="alu_display.ltx"/>
   <File Type="ROUTE-METHODOLOGY-DRC" Name="alu_display_methodology_drc_routed.rpt"/>
   <File Type="BITSTR-MMI" Name="alu_display.mmi"/>
   <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="alu_display_methodology_drc_routed.rpx"/>
   <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="alu_display_methodology_drc_routed.pb"/>
+  <File Type="BITSTR-SYSDEF" Name="alu_display.sysdef"/>
   <File Type="ROUTE-PWR-RPX" Name="alu_display_power_routed.rpx"/>
   <File Type="ROUTE-STATUS" Name="alu_display_route_status.rpt"/>
   <File Type="ROUTE-STATUS-PB" Name="alu_display_route_status.pb"/>
@@ -36,6 +38,7 @@
   <File Type="ROUTE-TIMING-PB" Name="alu_display_timing_summary_routed.pb"/>
   <File Type="ROUTE-TIMING-RPX" Name="alu_display_timing_summary_routed.rpx"/>
   <File Type="ROUTE-CLK" Name="alu_display_clock_utilization_routed.rpt"/>
+  <File Type="RDI-RDI" Name="alu_display.vdi"/>
   <File Type="ROUTE-BUS-SKEW" Name="alu_display_bus_skew_routed.rpt"/>
   <File Type="ROUTE-BUS-SKEW-PB" Name="alu_display_bus_skew_routed.pb"/>
   <File Type="ROUTE-BUS-SKEW-RPX" Name="alu_display_bus_skew_routed.rpx"/>
@@ -47,15 +50,12 @@
   <File Type="PDI-FILE" Name="alu_display.pdi"/>
   <File Type="RCFI_FILE" Name="alu_display.rcfi"/>
   <File Type="CFI_FILE" Name="alu_display.cfi"/>
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
   <File Type="RNPI_FILE" Name="alu_display.rnpi"/>
   <File Type="NPI_FILE" Name="alu_display.npi"/>
   <File Type="RBD_FILE" Name="alu_display.rbd"/>
-  <File Type="BITSTR-LTX" Name="alu_display.ltx"/>
-  <File Type="BITSTR-SYSDEF" Name="alu_display.sysdef"/>
   <File Type="BG-BGN" Name="alu_display.bgn"/>
   <File Type="BG-DRC" Name="alu_display.drc"/>
-  <File Type="RDI-RDI" Name="alu_display.vdi"/>
-  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/../../sourcecode/source_code/lcd_module.dcp">

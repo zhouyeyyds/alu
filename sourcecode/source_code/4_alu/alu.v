@@ -4,15 +4,14 @@
 //   > 描述  ：ALU模块，可做14种操作
 //*************************************************************************
 module alu(
-    input  [14:0] alu_control,  // ALU控制信号
-    //独热码控制14种操作
+    input clk, //时钟信号
+    input  [14:0] alu_control,  // ALU控制信号  独热码控制14种操作
     input  [31:0] alu_src1,     // ALU操作数1,为补码
     input  [31:0] alu_src2,     // ALU操作数2，为补码
     output [31:0] alu_result,   // ALU结果
-    output [31:0] div_odd       //除法的余数
+    output [31:0] div_odd      //除法的余数
     );
 
-   
     wire alu_add;   //加法操作
     wire alu_sub;   //减法操作
     wire alu_mul;   //乘法操作
@@ -68,7 +67,9 @@ module alu(
     assign or_result  = alu_src1 | alu_src2;      // 或结果为两数按位或
     assign nor_result = ~or_result;               // 或非结果为 或的结果按位取反
     assign xor_result = alu_src1 ^ alu_src2;      // 异或结果为两数按位异或
+    
     assign lui_result = {alu_src2[15:0], 16'd0};  // 立即数装载结果为立即数移位至高半字节
+    //高位加载时加载第二个操作数
 
 //-----{加法器}begin
 //add,sub,slt,sltu均使用该模块
@@ -85,11 +86,9 @@ module alu(
     adder32 adder32_module(
         .A(adder_operand1),
         .B(adder_operand2),
-        .cin (adder_cin),
-//        进位输入
+        .cin (adder_cin),//进位输入
         .S  (adder_result),
-        .C32(adder_cout)
-//        进位输出
+        .C32(adder_cout)//进位输出
     );
     
         //加减结果
@@ -172,8 +171,29 @@ module alu(
 //-----{移位器}end
 
 //-----{乘法器}begin
-    assign mul_result=0;
-    //乘法的结果单独用两个高位和低位结果来表示
+    wire [63:0] product; 
+    wire        mult_end;  
+
+    multiply multiply_module (
+    //实例化乘法模块
+        .clk       (clk       ),
+        .mult_begin(alu_mul   ),//当控制信号为乘法时 开始信号作用
+        .mult_op1  (alu_src1  ), 
+        .mult_op2  (alu_src1  ),
+        .product   (product   ),
+        .mult_end  (mult_end  )
+    );
+    reg [31:0]  temp;//中间值保存结果
+    always @(posedge clk)//时钟上升沿触发
+    begin
+        if (mult_end) //乘法操作结束时
+        begin
+            //赋值
+            temp  <= product[31:0];
+        end
+    end
+ 
+    assign mul_result=alu_mul?temp:0;
 //-----{乘法器}end
 
 //-----{除法器}begin

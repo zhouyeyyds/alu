@@ -4,7 +4,7 @@ Running: D:/vivado/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto 475b772a17
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 14 differs from formal bit length 15 for port 'alu_control' [D:/vivadoproject/sourcecode/source_code/4_alu/tb.v:13]
+WARNING: [VRFC 10-3091] actual bit length 14 differs from formal bit length 15 for port 'alu_control' [D:/vivadoproject/sourcecode/source_code/4_alu/tb.v:15]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -14,9 +14,9 @@ Compiling module xil_defaultlib.CLA
 Compiling module xil_defaultlib.adder_4
 Compiling module xil_defaultlib.CLA_16
 Compiling module xil_defaultlib.adder32
+Compiling module xil_defaultlib.multiply
 Compiling module xil_defaultlib.division
 Compiling module xil_defaultlib.alu
-Compiling module xil_defaultlib.multiply
 Compiling module xil_defaultlib.tb
 Compiling module xil_defaultlib.glbl
 Built simulation snapshot tb_behav

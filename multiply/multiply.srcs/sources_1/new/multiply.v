@@ -101,6 +101,6 @@ module multiply(              // 乘法器
     end 
     //若乘法结果为负数，则需要对结果取反+1
     assign product = product_sign ? (~product_temp+1) : product_temp;
-endmodule
 
+endmodule
 

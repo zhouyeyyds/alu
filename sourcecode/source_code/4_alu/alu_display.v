@@ -1,0 +1,240 @@
+//*************************************************************************
+//   > 文件名: alu_display.v
+//   > 描述  ：ALU显示模块，调用FPGA板上的IO接口和触摸屏
+//*************************************************************************
+module alu_display(
+    input clk,       // 时钟信号
+    input resetn,    //复位信号 后缀"n"代表低电平有效
+
+    //拨码开关，控制选择输入数
+    input [1:0] input_sel, //01:输入为控制信号(alu_control)
+                           //10:输入为源操作数1(alu_src1)
+                           //11:输入为源操作数2(alu_src2)
+
+    //触摸屏相关接口，不需要更改
+    output lcd_rst,
+    output lcd_cs,
+    output lcd_rs,
+    output lcd_wr,
+    output lcd_rd,
+    inout[15:0] lcd_data_io,
+    output lcd_bl_ctr,
+    inout ct_int,
+    inout ct_sda,
+    output ct_scl,
+    output ct_rstn
+    );
+//-----{调用ALU模块}begin
+    reg   [13:0] alu_control;  // ALU控制信号
+//   独热码
+    reg   [31:0] alu_src1;     // ALU操作数1
+    reg   [31:0] alu_src2;     // ALU操作数2
+    wire  [31:0] alu_result;   // ALU结果
+    wire  [31:0] div_odd;      //除法的余数
+
+    alu alu_module(
+        .alu_control(alu_control),
+        .alu_src1   (alu_src1   ),
+        .alu_src2   (alu_src2   ),
+        .alu_result (alu_result ),
+        .div_odd    (div_odd    )
+    );
+    
+//-----{调用ALU模块}end
+
+//-----{调用乘法器模块}begin
+    wire [63:0] product; 
+    wire        mult_end;  
+
+    multiply multiply_module (
+    //实例化乘法模块
+        .clk       (clk       ),
+        .mult_begin(alu_mul   ),
+        .mult_op1  (alu_src1  ), 
+        .mult_op2  (alu_src1  ),
+        .product   (product   ),
+        .mult_end  (mult_end  )
+    );
+    reg [31:0] mul_highresult;//乘法高位结果
+    reg [31:0] mul_lowresult;//乘法低位结果
+    always @(posedge clk)
+    begin
+        if (~alu_control[2])
+        //不执行乘法操作时
+        begin
+        //赋0值
+            mul_highresult <= 32'd0;
+            mul_lowresult  <= 32'd0;
+        end
+        else if (mult_end&&alu_control[2])
+        //执行乘法操作时
+        begin
+            mul_highresult <= product[63:32];
+            mul_lowresult  <= product[31:0];
+        end
+    end
+//-----{调用乘法器模块}end
+
+//---------------------{调用触摸屏模块}begin--------------------//
+//-----{实例化触摸屏}begin
+//此小节不需要更改
+    reg         display_valid;
+    reg  [39:0] display_name;
+    reg  [31:0] display_value;
+    wire [5 :0] display_number;//用6位2进制数表示 共有64个编号
+    wire        input_valid;
+    wire [31:0] input_value;
+
+    lcd_module lcd_module(
+        .clk            (clk           ),   //10Mhz
+        .resetn         (resetn        ),
+        //低电平有效
+
+        //调用触摸屏的接口
+        .display_valid  (display_valid ),
+        .display_name   (display_name  ),
+        .display_value  (display_value ),
+        .display_number (display_number),
+        .input_valid    (input_valid   ),
+        .input_value    (input_value   ),
+
+        //lcd触摸屏相关接口，不需要更改
+        .lcd_rst        (lcd_rst       ),
+        .lcd_cs         (lcd_cs        ),
+        .lcd_rs         (lcd_rs        ),
+        .lcd_wr         (lcd_wr        ),
+        .lcd_rd         (lcd_rd        ),
+        .lcd_data_io    (lcd_data_io   ),
+        .lcd_bl_ctr     (lcd_bl_ctr    ),
+        .ct_int         (ct_int        ),
+        .ct_sda         (ct_sda        ),
+        .ct_scl         (ct_scl        ),
+        .ct_rstn        (ct_rstn       )
+    ); 
+//-----{实例化触摸屏}end
+
+//-----{从触摸屏获取输入}begin
+//根据实际需要输入的数修改此小节，
+//建议对每一个数的输入，编写单独一个always块
+    //当input_sel为01时，表示输入数控制信号，即alu_control
+    always @(posedge clk)
+    //时序逻辑块  上升沿触发  在时序逻辑块种 用非阻塞赋值  <=
+    begin
+        if (!resetn)
+        //resetn 低电平有效 所以要取反
+        begin
+            alu_control <= 14'd0;
+            //有效的时候 先将14位全部置为0
+        end
+        else if (input_valid && input_sel==2'b01)
+        //如果已经输入了有效数字 并且拨码开关为01
+        begin
+            alu_control <= input_value[13:0];
+            //将输入的值赋值给控制信号 这里只选取最后的14位 其他位无效
+        end
+    end
+    
+    //当input_sel为10时，表示输入数为源操作数1，即alu_src1
+    always @(posedge clk)
+    begin
+        if (!resetn)
+        //resetn 低电平有效 所以要取反
+        begin
+            alu_src1 <= 32'd0;
+            //刚开始有效的时候 先将操作数1全部置为0
+        end
+        else if (input_valid && input_sel==2'b10)
+        //如果已经输入了有效数字 并且拨码开关为10
+        begin
+            alu_src1 <= input_value;
+            //将输入的值赋值给操作数1
+        end
+    end
+
+    //当input_sel为11时，表示输入数为源操作数2，即alu_src2
+    always @(posedge clk)
+    begin
+        if (!resetn)
+        //resetn 低电平有效 所以要取反
+        begin
+            alu_src2 <= 32'd0;
+            //刚开始有效的时候 先将操作数1全部置为0
+        end
+        else if (input_valid && input_sel==2'b11)
+        //如果已经输入了有效数字 并且拨码开关为11
+        begin
+            alu_src2 <= input_value;
+            //将输入的值赋值给操作数2
+        end
+    end
+//-----{从触摸屏获取输入}end
+
+//-----{输出到触摸屏显示}begin
+//根据需要显示的数修改此小节，
+//触摸屏上共有44块显示区域，可显示44组32位数据
+//44块显示区域从1开始编号，编号为1~44，
+    always @(posedge clk)
+    begin
+        case(display_number)
+            6'd1 :
+            //操作数1
+            begin
+                display_valid <= 1'b1;
+                display_name  <= "SRC_1";
+                display_value <= alu_src1;
+            end
+            6'd2 :
+            //操作数2
+            begin
+                display_valid <= 1'b1;
+                display_name  <= "SRC_2";
+                display_value <= alu_src2;
+            end
+            6'd3 :
+            //显示控制信号
+            begin
+                display_valid <= 1'b1;
+                display_name  <= "CONTR";
+                display_value <={18'd0, alu_control};
+                //这里使用了字符串的拼接 { ，}
+                //因为操作码由14位构成 故高位的18位用0补充
+            end
+            6'd4 :
+            //显示结果
+            begin
+                display_valid <= 1'b1;
+                display_name  <= "RESUL";
+                display_value <= alu_result;
+            end
+            6'd5 :
+            //显示除法结果的余数
+            begin
+                display_valid <= 1'b1;
+                display_name  <= "ODD";
+                display_value <= div_odd;
+            end
+            6'd6 :
+            //显示乘法高位
+            begin
+                display_valid <= 1'b1;
+                display_name  <= "HIGH";
+                display_value <= alu_mul?mul_highresult:0 ;
+            end
+            6'd7 :
+            //显示乘法低位
+            begin
+                display_valid <= 1'b1;
+                display_name  <= "LOW";
+                display_value <= alu_mul?mul_lowresult:0;
+            end
+            default :
+            begin
+                display_valid <= 1'b0;
+                display_name  <= 40'd0;
+                display_value <= 32'd0;
+            end
+        endcase
+    end
+//-----{输出到触摸屏显示}end
+//----------------------{调用触摸屏模块}end---------------------//
+endmodule

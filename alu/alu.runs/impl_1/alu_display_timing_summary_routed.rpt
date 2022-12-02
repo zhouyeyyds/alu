@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date         : Fri Nov 25 15:48:21 2022
+| Date         : Fri Dec  2 16:41:12 2022
 | Host         : DESKTOP-GIEJU79 running 64-bit major release  (build 9200)
 | Command      : report_timing_summary -max_paths 10 -file alu_display_timing_summary_routed.rpt -pb alu_display_timing_summary_routed.pb -rpx alu_display_timing_summary_routed.rpx -warn_on_violation
 | Design       : alu_display
@@ -54,7 +54,7 @@ Table of Contents
 
 1. checking no_clock
 --------------------
- There are 292 register/latch pins with no clock driven by root clock pin: clk (HIGH)
+ There are 307 register/latch pins with no clock driven by root clock pin: clk (HIGH)
 
  There are 106 register/latch pins with no clock driven by root clock pin: lcd_module/clk_2_reg/Q (HIGH)
 
@@ -71,7 +71,7 @@ Table of Contents
 
 4. checking unconstrained_internal_endpoints
 --------------------------------------------
- There are 867 pins that are not constrained for maximum delay. (HIGH)
+ There are 886 pins that are not constrained for maximum delay. (HIGH)
 
  There are 0 pins that are not constrained for maximum delay due to constant clock.
 

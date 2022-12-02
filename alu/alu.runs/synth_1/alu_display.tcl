@@ -17,6 +17,7 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
+set_param chipscope.maxJobs 3
 set_param xicom.use_bs_reader 1
 create_project -in_memory -part xc7a200tfbv676-2
 
@@ -32,8 +33,14 @@ set_property ip_cache_permissions {read write} [current_project]
 add_files -quiet D:/sourcecode/source_code/lcd_module.dcp
 set_property used_in_implementation false [get_files D:/sourcecode/source_code/lcd_module.dcp]
 read_verilog -library xil_defaultlib {
-  D:/sourcecode/source_code/4_alu/adder.v
+  D:/vivadoproject/adder32/adder32.srcs/sources_1/new/CLA.v
+  D:/vivadoproject/adder32/adder32.srcs/sources_1/new/CLA_16.v
+  D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder.v
+  D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder32.v
+  D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder_4.v
   D:/sourcecode/source_code/4_alu/alu.v
+  D:/vivadoproject/division/division.srcs/sources_1/new/division.v
+  D:/vivadoproject/multiply/multiply.srcs/sources_1/new/multiply.v
   D:/sourcecode/source_code/4_alu/alu_display.v
 }
 # Mark all dcp files as not used in implementation to prevent them from being

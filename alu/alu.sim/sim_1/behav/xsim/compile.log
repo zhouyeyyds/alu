@@ -8,12 +8,12 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivadoproject/adder32/adder32.sr
 INFO: [VRFC 10-311] analyzing module adder32
 INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivadoproject/adder32/adder32.srcs/sources_1/new/adder_4.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module adder_4
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/sourcecode/source_code/4_alu/alu.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivadoproject/sourcecode/source_code/4_alu/alu.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module alu
 INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivadoproject/division/division.srcs/sources_1/new/division.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module division
 INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivadoproject/multiply/multiply.srcs/sources_1/new/multiply.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module multiply
 WARNING: [VRFC 10-3380] identifier 'multiplier' is used before its declaration [D:/vivadoproject/multiply/multiply.srcs/sources_1/new/multiply.v:23]
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/sourcecode/source_code/4_alu/tb.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/vivadoproject/sourcecode/source_code/4_alu/tb.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module tb
